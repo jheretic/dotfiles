@@ -8,7 +8,7 @@ install-bash:
 
 install-vim:
 	ln -sf `pwd`/files/.vimrc ~/.vimrc
-	mkdir ~/.vim/bundle
+	mkdir -p ~/.vim/bundle
 	git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
 install-top:

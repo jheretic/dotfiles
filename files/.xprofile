@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+# ~/.xprofile
+#
+# Executed by DM (run your window manager from here)
+
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/*; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
+#echo "Starting keyring-daemon..."
+#eval `/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg`
+#eval `/usr/bin/gnome-keyring-daemon --start --components=pkcs11,ssh,gpg`
+#export GNOME_KEYRING_CONTROL
+#export GNOME_KEYRING_PID
+export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
+export GPG_AGENT_INFO="$GNOME_KEYRING_CONTROL/gpg:0:1"
+#echo "Setting compose key..."
+#setxkbmap -option compose:ralt
+#echo "Starting gnome-settings-daemon before WM..."
+#/usr/lib/gnome-settings-daemon/gnome-settings-daemon &
+# Start xscreensaver
+#xscreensaver -nosplash &
+echo "Enabling hack to use Synergy through NM-Dispatcher..."
+xhost +si:localhost:$(whoami)
+echo "Enabling hack to allow for the dock to work..."
+xhost +si:localuser:root

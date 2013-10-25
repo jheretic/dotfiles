@@ -24,7 +24,7 @@ export GPG_AGENT_INFO="$GNOME_KEYRING_CONTROL/gpg:0:1"
 #/usr/lib/gnome-settings-daemon/gnome-settings-daemon &
 # Start xscreensaver
 #xscreensaver -nosplash &
-echo "Enabling hack to use Synergy through NM-Dispatcher..."
-xhost +si:localhost:$(whoami)
-echo "Enabling hack to allow for the dock to work..."
-xhost +si:localuser:root
+#echo "Enabling hack to use Synergy through NM-Dispatcher..."
+#xhost +si:localhost:$(whoami)
+#echo "Enabling hack to allow for the dock to work..."
+#xhost +si:localuser:root

@@ -56,7 +56,7 @@ fi
 function imc_prompt_command () {
     local rts=$?
 	  local u="\u@\h"
-    local w=$(echo "${PWD/#$HOME/~}" | sed 's/.*\/\(.*\/.*\/.*\)$/\1/') # pwd max depth 3
+    local w=$(echo "${PWD/#$HOME/\~}" | sed 's/.*\/\(.*\/.*\/.*\)$/\1/') # pwd max depth 3
     # pwd max length L, prefix shortened pwd with m
     local L=45 m='<'
     [ ${#w} -gt $L ] && { local n=$((${#w} - $L + ${#m}))
@@ -76,7 +76,7 @@ function imc_prompt_command () {
 function imc_color_prompt_command () {
     local rts=$?
 	  local u="\[\033[1;36m\]\u\[\033[1;30m\]@\[\033[0;36m\]\h\[\033[0m\]"
-    local w=$(echo "${PWD/#$HOME/~}" | sed 's/.*\/\(.*\/.*\/.*\)$/\1/') # pwd max depth 3
+    local w=$(echo "${PWD/#$HOME/\~}" | sed 's/.*\/\(.*\/.*\/.*\)$/\1/') # pwd max depth 3
     # pwd max length L, prefix shortened pwd with m
     local L=45 m='<'
     [ ${#w} -gt $L ] && { local n=$((${#w} - $L + ${#m}))
@@ -100,7 +100,7 @@ function imc_color_prompt_command () {
 function acorn_prompt_command () {
     local rts=$?
 	  local u="\h"
-    local w=$(echo "${PWD/#$HOME/~}" | sed 's/.*\/\(.*\/.*\/.*\)$/\1/') # pwd max depth 3
+    local w=$(echo "${PWD/#$HOME/\~}" | sed 's/.*\/\(.*\/.*\/.*\)$/\1/') # pwd max depth 3
     # pwd max length L, prefix shortened pwd with m
     local L=45 m='<'
     [ ${#w} -gt $L ] && { local n=$((${#w} - $L + ${#m}))
@@ -120,7 +120,7 @@ function acorn_prompt_command () {
 function acorn_color_prompt_command () {
     local rts=$?
 	  local u="\[\033[0;31m\]\h\[\033[0m\]"
-    local w=$(echo "${PWD/#$HOME/~}" | sed 's/.*\/\(.*\/.*\/.*\)$/\1/') # pwd max depth 3
+    local w=$(echo "${PWD/#$HOME/\~}" | sed 's/.*\/\(.*\/.*\/.*\)$/\1/') # pwd max depth 3
     # pwd max length L, prefix shortened pwd with m
     local L=45 m='<'
     [ ${#w} -gt $L ] && { local n=$((${#w} - $L + ${#m}))

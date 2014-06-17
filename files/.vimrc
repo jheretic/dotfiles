@@ -31,7 +31,7 @@ Bundle 'terryma/vim-multiple-cursors'
 Bundle 'Yggdroot/indentLine'
 Bundle 'vhdirk/vim-cmake'
 Bundle 'jheretic/c.vim'
-Bundle 'bash-support.vim'
+"Bundle 'bash-support.vim'
 "Bundle 'doxygen-support.vim'
 Bundle 'lua-support'
 
@@ -150,10 +150,10 @@ nmap <silent> <A-Right> :wincmd l<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tabs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <right> <ESC>:bn<RETURN> " right arrow (normal mode) switches buffers  (excluding minibuf)
-map <left> <ESC>:bp<RETURN> " left arrow (normal mode) switches buffers (excluding minibuf) 
-map <C-right> <ESC>:tabn<RETURN> " right arrow (normal mode) switches buffers  (excluding minibuf)
-map <C-left> <ESC>:tabp<RETURN> " left arrow (normal mode) switches buffers (excluding minibuf) 
+map <right> <ESC>:tabn<RETURN> " right arrow (normal mode) switches buffers  (excluding minibuf)
+map <left> <ESC>:tabp<RETURN> " left arrow (normal mode) switches buffers (excluding minibuf) 
+map <C-right> <ESC>:bn<RETURN> " right arrow (normal mode) switches buffers  (excluding minibuf)
+map <C-left> <ESC>:bp<RETURN> " left arrow (normal mode) switches buffers (excluding minibuf) 
 " tab navigation like firefox
 map <a-1> <ESC>1gt<RETURN>
 map <a-2> <ESC>2gt<RETURN>

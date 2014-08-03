@@ -16,8 +16,8 @@ fi
 #eval `/usr/bin/gnome-keyring-daemon --start --components=pkcs11,ssh,gpg`
 #export GNOME_KEYRING_CONTROL
 #export GNOME_KEYRING_PID
-export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
-export GPG_AGENT_INFO="$GNOME_KEYRING_CONTROL/gpg:0:1"
+#export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
+#export GPG_AGENT_INFO="$GNOME_KEYRING_CONTROL/gpg:0:1"
 #echo "Setting compose key..."
 #setxkbmap -option compose:ralt
 #echo "Starting gnome-settings-daemon before WM..."

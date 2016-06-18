@@ -31,10 +31,12 @@ Bundle 'terryma/vim-multiple-cursors'
 Bundle 'Yggdroot/indentLine'
 Bundle 'vhdirk/vim-cmake'
 Bundle 'jheretic/c.vim'
-"Bundle 'bash-support.vim'
+Bundle 'rust-lang/rust.vim'
+Bundle 'bash-support.vim'
 "Bundle 'doxygen-support.vim'
 Bundle 'lua-support'
 Bundle 'netrw.vim'
+Bundle 'saltstack/salt-vim'
 
 call vundle#end()
 filetype plugin indent on     " required!
@@ -46,7 +48,7 @@ let g:airline#extensions#tabline#enabled = 1 " Enable Airline for tabs
 let g:airline_powerline_fonts = 1
 "let g:syntastic_c_checkers = ['oclint', 'gcc']
 let g:syntastic_c_checkers = ['cppcheck', 'gcc']
-
+let g:BASH_MapLeader  = '\'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General

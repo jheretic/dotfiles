@@ -7,9 +7,10 @@ install-bash:
 	ln -sf `pwd`/files/.bash_aliases ~/.bash_aliases
 
 install-vim:
-	ln -sf `pwd`/files/.vimrc ~/.vimrc
-	mkdir -p ~/.vim/bundle
-	git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+	mkdir -p ~/.config/nvim
+	ln -sf `pwd`/files/.config/nvim/init.vim ~/.config/nvim/init.vim
+	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+		https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 install-top:
 	ln -sf `pwd`/files/.toprc ~/.toprc

@@ -140,6 +140,11 @@ function acorn_color_prompt_command () {
     esac                                               
 }                                                      
 
+#VTE workaround
+if [ $TERMINIX_ID ] || [ $VTE_VERSION ]; then
+  source /etc/profile.d/vte.sh
+fi
+
 # Actually set prompts
 if [[ ${EUID} == 0 ]] ; then
   if [ "$color_prompt" = yes ]; then

@@ -30,3 +30,6 @@ install-directories:
 	mkdir -p ~/aud ~/bin ~/cds ~/doc/templates ~/emu ~/img ~/lib ~/net/torrents ~/pub ~/src/scratch ~/top ~/vid/{tv,movies,trailers,music_videos} ~/www ~/.bak ~/.tmp ~/.config 
 	ln -sf `pwd`/files/.config/user-dirs.conf ~/.config/user-dirs.conf
 	ln -sf `pwd`/files/.config/user-dirs.locale ~/.config/user-dirs.locale
+
+install-git:
+	ln -sf `pwd`/files/.gitignore_global ~/.gitignore_global

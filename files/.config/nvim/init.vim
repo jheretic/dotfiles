@@ -28,7 +28,7 @@ Plug 'vim-scripts/doxygen-support.vim', { 'for': 'doxygen' }
 Plug 'vim-scripts/lua-support', { 'for': 'lua' }
 Plug 'saltstack/salt-vim', { 'for': 'sls' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',

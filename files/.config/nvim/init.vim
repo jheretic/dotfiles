@@ -29,6 +29,7 @@ Plug 'vim-scripts/lua-support', { 'for': 'lua' }
 Plug 'saltstack/salt-vim', { 'for': 'sls' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'Firef0x/PKGBUILD.vim'
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',

@@ -206,9 +206,12 @@ if [ -x /usr/lib/command-not-found -o -x /usr/share/command-not-found ]; then
 	}
 fi
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+#Bauerbill wrapper
+[ -x /usr/bin/bb-wrapper ] && alias bb='/usr/bin/bb-wrapper --build-dir /tmp/build'
+
 #Local environment
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
 fi
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash

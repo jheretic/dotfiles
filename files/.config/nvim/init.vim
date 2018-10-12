@@ -42,12 +42,9 @@ call plug#end()
 let g:airline#extensions#tabline#enabled = 1 " Enable Airline for tabs
 let g:airline_powerline_fonts = 1
 
-let g:syntastic_c_checkers = ['cppcheck', 'gcc']
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:ale_linters = {'javascript': ['eslint'] }
+let g:ale_fixers = {'javascript': ['eslint'] }
+let g:ale_fix_on_save = 1
 
 let g:BASH_MapLeader  = '\'
 
@@ -71,8 +68,7 @@ set hidden
 
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ 'javascript': ['flow-language-server', '--stdio'],
     \ 'python': ['pyls'],
     \ }
 

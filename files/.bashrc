@@ -64,13 +64,13 @@ function imc_prompt_command () {
                      ||   local w="${w}"
     local p="(((i)))"
     PS1="${debian_chroot:+($debian_chroot )}${u}:${w} ${p} "
-    if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-      VTE_PWD_THING="$(__vte_osc7)"
-      PS1="$PS1$VTE_PWD_THING"
-    fi
     case "$TERM" in                                    
     xterm*|rxvt*)                                      
-        echo -ne "\033]0;${debian_chroot:+($debian_chroot )}${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"
+        if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007 $(__vte_osc7)"
+        else
+          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"
+        fi
         ;;                                             
     *)                                                 
         ;;                                             
@@ -91,13 +91,13 @@ function imc_color_prompt_command () {
     local p="\[\033[1;32m\](\[\033[0;32m\](\[\033[1;30m\](\[\033[m\]i\[\033[1;30m\])\[\033[0;32m\])\[\033[1;32m\])\[\033[m\]" || \
     local p="\[\033[1;31m\](\[\033[0;31m\](\[\033[1;30m\](\[\033[m\]i\[\033[1;30m\])\[\033[0;31m\])\[\033[1;31m\])\[\033[m\]"
     PS1="${debian_chroot:+($debian_chroot )}${u}:${w} ${p} "
-    if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-      VTE_PWD_THING="$(__vte_osc7)"
-      PS1="$PS1$VTE_PWD_THING"
-    fi
     case "$TERM" in                                    
     xterm*|rxvt*)                                      
-        echo -ne "\033]0;${debian_chroot:+($debian_chroot )}${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"
+        if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007 $(__vte_osc7)"
+        else
+          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"
+        fi
         ;;                                             
     *)                                                 
         ;;                                             
@@ -116,13 +116,13 @@ function acorn_prompt_command () {
                      ||   local w="${w}"
     local p="--{D"
     PS1="${debian_chroot:+($debian_chroot )}${u}:${w} ${p} "
-    if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-      VTE_PWD_THING="$(__vte_osc7)"
-      PS1="$PS1$VTE_PWD_THING"
-    fi
     case "$TERM" in                                    
     xterm*|rxvt*)                                      
-        echo -ne "\033]0;${debian_chroot:+($debian_chroot )}root@${HOSTNAME}: ${PWD/$HOME/~}\007"
+        if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}root@${HOSTNAME}: ${PWD/$HOME/~}\007 $(__vte_osc7)"
+        else
+          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}root@${HOSTNAME}: ${PWD/$HOME/~}\007"
+        fi
         ;;                                             
     *)                                                 
         ;;                                             
@@ -143,13 +143,13 @@ function acorn_color_prompt_command () {
     local p="\[\033[1;32m\]-\[\033[1;32m\]-\[\033[1;30m\]{\[\033[0;32m\]D\[\033[m\]" || \
     local p="\[\033[1;32m\]-\[\033[1;32m\]-\[\033[1;30m\]{\[\033[0;31m\]D\[\033[m\]"
     PS1="${debian_chroot:+($debian_chroot )}${u}:${w} ${p} "
-    if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-      VTE_PWD_THING="$(__vte_osc7)"
-      PS1="$PS1$VTE_PWD_THING"
-    fi
     case "$TERM" in                                    
     xterm*|rxvt*)                                      
-        echo -ne "\033]0;${debian_chroot:+($debian_chroot )}root@${HOSTNAME}: ${PWD/$HOME/~}\007"
+        if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}root@${HOSTNAME}: ${PWD/$HOME/~}\007 $(__vte_osc7)"
+        else
+          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}root@${HOSTNAME}: ${PWD/$HOME/~}\007"
+        fi
         ;;                                             
     *)                                                 
         ;;                                             

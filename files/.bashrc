@@ -67,7 +67,7 @@ function imc_prompt_command () {
     case "$TERM" in                                    
     xterm*|rxvt*)                                      
         if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007 $(__vte_osc7)"
+          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007$(__vte_osc7)"
         else
           echo -ne "\033]0;${debian_chroot:+($debian_chroot )}${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"
         fi
@@ -94,7 +94,7 @@ function imc_color_prompt_command () {
     case "$TERM" in                                    
     xterm*|rxvt*)                                      
         if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007 $(__vte_osc7)"
+          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007$(__vte_osc7)"
         else
           echo -ne "\033]0;${debian_chroot:+($debian_chroot )}${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"
         fi
@@ -119,7 +119,7 @@ function acorn_prompt_command () {
     case "$TERM" in                                    
     xterm*|rxvt*)                                      
         if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}root@${HOSTNAME}: ${PWD/$HOME/~}\007 $(__vte_osc7)"
+          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}root@${HOSTNAME}: ${PWD/$HOME/~}\007$(__vte_osc7)"
         else
           echo -ne "\033]0;${debian_chroot:+($debian_chroot )}root@${HOSTNAME}: ${PWD/$HOME/~}\007"
         fi
@@ -146,7 +146,7 @@ function acorn_color_prompt_command () {
     case "$TERM" in                                    
     xterm*|rxvt*)                                      
         if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}root@${HOSTNAME}: ${PWD/$HOME/~}\007 $(__vte_osc7)"
+          echo -ne "\033]0;${debian_chroot:+($debian_chroot )}root@${HOSTNAME}: ${PWD/$HOME/~}\007$(__vte_osc7)"
         else
           echo -ne "\033]0;${debian_chroot:+($debian_chroot )}root@${HOSTNAME}: ${PWD/$HOME/~}\007"
         fi

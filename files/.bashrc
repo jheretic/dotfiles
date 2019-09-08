@@ -234,3 +234,6 @@ fi
 
 # added by travis gem
 [ -f /home/n0n/.travis/travis.sh ] && source /home/n0n/.travis/travis.sh
+
+# Fuck you, go
+[ -x /usr/bin/go ] && export GOPATH=$HOME/lib/go

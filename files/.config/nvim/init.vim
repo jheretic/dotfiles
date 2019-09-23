@@ -45,8 +45,8 @@ let g:airline#extensions#tabline#enabled = 1 " Enable Airline for tabs
 let g:airline#extensions#ale#enabled = 1 " Enable Airline for ALE
 let g:airline_powerline_fonts = 1
 
-let g:ale_linters = {'javascript': ['eslint'], 'rust': ['rustfmt'], 'C': ['cppcheck', 'flawfinder'], 'go': ['gofmt'], 'python': ['black', 'yapf'], 'BASH': ['shfmt'], 'json': ['prettier'], 'markdown': ['prettier'], 'sh': ['language_server'] }
-let g:ale_fixers = {'javascript': ['eslint'], 'rust': ['rustfmt'], 'C': ['cppcheck', 'flawfinder'], 'go': ['gofmt'], 'python': ['black', 'yapf'], 'BASH': ['shfmt'], 'json': ['prettier'], 'markdown': ['prettier'], 'sh': ['language_server'] }
+let g:ale_linters = {'javascript': ['eslint'], 'rust': ['rustfmt'], 'C': ['cppcheck', 'flawfinder'], 'go': ['gofmt'], 'python': ['black', 'yapf'], 'BASH': ['shfmt'], 'json': ['prettier'], 'markdown': ['prettier'], 'sh': ['shfmt'] }
+let g:ale_fixers = {'javascript': ['eslint'], 'rust': ['rustfmt'], 'C': ['cppcheck', 'flawfinder'], 'go': ['gofmt'], 'python': ['black', 'yapf'], 'BASH': ['shfmt'], 'json': ['prettier'], 'markdown': ['prettier'], 'sh': ['shfmt'] }
 let g:ale_fix_on_save = 1
 
 let g:BASH_MapLeader  = '\'

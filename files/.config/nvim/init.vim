@@ -45,9 +45,21 @@ let g:airline#extensions#tabline#enabled = 1 " Enable Airline for tabs
 let g:airline#extensions#ale#enabled = 1 " Enable Airline for ALE
 let g:airline_powerline_fonts = 1
 
-let g:ale_linters = {'javascript': ['eslint'], 'rust': ['rustfmt'], 'C': ['cppcheck', 'flawfinder'], 'go': ['gofmt'], 'python': ['black', 'yapf'], 'json': ['prettier'], 'markdown': ['prettier'], 'sh': ['shfmt'] }
-let g:ale_fixers = {'javascript': ['eslint'], 'rust': ['rustfmt'], 'C': ['cppcheck', 'flawfinder'], 'go': ['gofmt'], 'python': ['black', 'yapf'], 'json': ['prettier'], 'markdown': ['prettier'], 'sh': ['shfmt'] }
+"let g:ale_linters = {'javascript': ['eslint'], 'rust': ['rustfmt'], 'C': ['cppcheck', 'flawfinder'], 'go': ['gofmt'], 'python': ['black', 'yapf'], 'json': ['prettier'], 'markdown': ['prettier'], 'sh': ['shfmt'] }
+let g:ale_fixers = {
+    \ '*': [ 'remove_trailing_lines', 'trim_whitespace'],
+    \ 'javascript': ['eslint'],
+    \ 'rust': ['rustfmt'],
+    \ 'C': ['cppcheck', 'flawfinder'],
+    \ 'go': ['gofmt'],
+    \ 'python': ['black', 'yapf'],
+    \ 'json': ['prettier'],
+    \ 'markdown': ['prettier'],
+    \ 'sh': ['shfmt']
+    \ }
 let g:ale_fix_on_save = 1
+
+let g:ale_python_auto_pipenv = 1
 
 let g:BASH_MapLeader  = '\'
 
@@ -65,8 +77,8 @@ endfunction"}}}
 " Close the documentation window when completion is done
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
-let g:python_host_prog = '/usr/bin/python2'
-let g:python3_host_prog = '/usr/bin/python'
+"let g:python_host_prog = '/usr/bin/python2'
+"let g:python3_host_prog = '/usr/bin/python'
 
 " LanguageServer
 " Required for operations modifying multiple buffers like rename.

@@ -1,5 +1,4 @@
-install: install-bash install-vim install-top install-x install-directories \
-			install-screen
+install: install-bash install-vim install-top install-screen install-x install-directories install-screen install-git
 
 install-bash:
 	ln -sf `pwd`/files/.bashrc ~/.bashrc
@@ -27,8 +26,8 @@ install-apps:
 	ln -sf `pwd`/files/.local/share/applications/firefox-test.desktop ~/.local/share/applications/firefox-test.desktop
 
 install-directories:
-	mkdir -p ~/aud ~/bin ~/cds ~/doc/templates ~/emu ~/img ~/lib ~/net/torrents ~/pub ~/src/scratch ~/top ~/vid/{tv,movies,trailers,music_videos} ~/www ~/.bak ~/.tmp ~/.config 
-	ln -sf `pwd`/files/.config/user-dirs.conf ~/.config/user-dirs.conf
+	mkdir -p ~/aud ~/doc/templates ~/emu ~/img ~/net/torrents ~/pub ~/src/scratch ~/top ~/vid/{tv,movies,trailers,music_videos} ~/www ~/.bak ~/.tmp ~/.config
+	ln -sf `pwd`/files/.config/user-dirs.dirs ~/.config/user-dirs.dirs
 	ln -sf `pwd`/files/.config/user-dirs.locale ~/.config/user-dirs.locale
 
 install-git:

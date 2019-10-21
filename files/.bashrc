@@ -79,7 +79,7 @@ function imc_prompt_command() {
   local w=$(echo "${PWD/#$HOME/\~}" | sed 's/.*\/\(.*\/.*\/.*\)$/\1/') # pwd max depth 3
   # pwd max length L, prefix shortened pwd with m
   local L=45 m='<'
-  [[ ${#w} -gt $L ]] && {
+  ((${#w} > $L)) && {
     local n=$((${#w} - $L + ${#m}))
     local w="${m}${w:$n}"
   } ||
@@ -105,13 +105,13 @@ function imc_color_prompt_command() {
   local w=$(echo "${PWD/#$HOME/\~}" | sed 's/.*\/\(.*\/.*\/.*\)$/\1/') # pwd max depth 3
   # pwd max length L, prefix shortened pwd with m
   local L=45 m='<'
-  [[ ${#w} -gt $L ]] && {
+  ((${#w} > $L)) && {
     local n=$((${#w} - $L + ${#m}))
     local w="\[\033[0;32m\]${m}\[\033[1;30m\]${w:$n}\[\033[0m\]"
   } ||
     local w="\[\033[1;30m\]${w}\[\033[0m\]"
   # different colors for different return status
-  [[ $rts -eq 0 ]] &&
+  (($rts == 0)) &&
     local p="\[\033[1;32m\](\[\033[0;32m\](\[\033[1;30m\](\[\033[m\]i\[\033[1;30m\])\[\033[0;32m\])\[\033[1;32m\])\[\033[m\]" ||
     local p="\[\033[1;31m\](\[\033[0;31m\](\[\033[1;30m\](\[\033[m\]i\[\033[1;30m\])\[\033[0;31m\])\[\033[1;31m\])\[\033[m\]"
   PS1="${debian_chroot:+($debian_chroot )}${u}:${w} ${p} "
@@ -135,7 +135,7 @@ function acorn_prompt_command() {
   local w=$(echo "${PWD/#$HOME/\~}" | sed 's/.*\/\(.*\/.*\/.*\)$/\1/') # pwd max depth 3
   # pwd max length L, prefix shortened pwd with m
   local L=45 m='<'
-  [[ ${#w} -gt $L ]] && {
+  ((${#w} > $L)) && {
     local n=$((${#w} - $L + ${#m}))
     local w="${m}${w:$n}"
   } ||
@@ -161,13 +161,13 @@ function acorn_color_prompt_command() {
   local w=$(echo "${PWD/#$HOME/\~}" | sed 's/.*\/\(.*\/.*\/.*\)$/\1/') # pwd max depth 3
   # pwd max length L, prefix shortened pwd with m
   local L=45 m='<'
-  [[ ${#w} -gt $L ]] && {
+  ((${#w} > $L)) && {
     local n=$((${#w} - $L + ${#m}))
     local w="\[\033[0;32m\]${m}\[\033[1;30m\]${w:$n}\[\033[0m\]"
   } ||
     local w="\[\033[1;30m\]${w}\[\033[0m\]"
   # different colors for different return status
-  [[ $rts -eq 0 ]] &&
+  (($rts == 0)) &&
     local p="\[\033[1;32m\]-\[\033[1;32m\]-\[\033[1;30m\]{\[\033[0;32m\]D\[\033[m\]" ||
     local p="\[\033[1;32m\]-\[\033[1;32m\]-\[\033[1;30m\]{\[\033[0;31m\]D\[\033[m\]"
   PS1="${debian_chroot:+($debian_chroot )}${u}:${w} ${p} "
@@ -206,7 +206,7 @@ fi
 unset color_prompt force_color_prompt
 
 # Load history from all sessions
-PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+PROMPT_COMMAND="$PROMPT_COMMAND; history -a; history -c; history -r"
 
 # ALIASES
 # enable color support of ls and also add handy aliases

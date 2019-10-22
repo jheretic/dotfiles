@@ -44,6 +44,11 @@ shopt -s cmdhist
 #GPG
 export GPG_TTY=$(tty)
 hash "gpg-connect-agent" 2>/dev/null && gpg-connect-agent updatestartuptty /bye >/dev/null
+# Set SSH auth sock to point at GPG only if we're not connecting via SSH
+if [[ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]] && [[ -z "$SSH_CONNECTION" ]]; then
+  unset SSH_AGENT_PID
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+fi
 
 #PROMPTS
 # set variable identifying the chroot you work in (used in the prompt below)

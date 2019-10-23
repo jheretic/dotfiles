@@ -274,7 +274,10 @@ hash "bb-wrapper" 2>/dev/null && alias bb="$(which bb-wrapper) --build-dir /tmp/
 hash "cargo" 2>/dev/null && append_path "$HOME/.cargo/bin"
 
 # Force Go to stay in its lane
-hash "go" 2>/dev/null && append_path "$HOME/.local/lib/go"
+hash "go" 2>/dev/null && {
+  export GOPATH="$HOME/.local/lib/go"
+  append_path "$GOPATH/bin"
+}
 
 # Load rbenv environment
 hash "rbenv" 2>/dev/null && eval "$(rbenv init -)"

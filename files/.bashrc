@@ -43,7 +43,9 @@ shopt -s cmdhist
 
 #GPG
 export GPG_TTY=$(tty)
-hash "gpg-connect-agent" 2>/dev/null && gpg-connect-agent updatestartuptty /bye >/dev/null
+if [[ -d "$HOME/.gnupg" ]]; then
+  hash "gpg-connect-agent" 2>/dev/null && gpg-connect-agent updatestartuptty /bye >/dev/null
+fi
 # Set SSH auth sock to point at GPG only if we're not connecting via SSH
 if [[ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]] && [[ -z "$SSH_CONNECTION" ]]; then
   unset SSH_AGENT_PID

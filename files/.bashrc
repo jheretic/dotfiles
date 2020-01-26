@@ -23,11 +23,14 @@ append_path "/sbin"
 append_path "/usr/sbin"
 append_path "/usr/local/sbin"
 append_path "$HOME/.local/bin"
+
 # set vi mode
 set -o vi
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
+# Enable '**' for recursive globbing
+shopt -s globstar
 # smart history search
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
@@ -220,12 +223,23 @@ PROMPT_COMMAND="$PROMPT_COMMAND; history -a; history -c; history -r"
 if [[ -x /usr/bin/dircolors ]]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
   alias ls='ls --color=auto'
+  alias diff='diff --color=auto'
   alias dir='dir --color=auto'
   alias vdir='vdir --color=auto'
 
   alias grep='grep --color=auto'
   alias fgrep='fgrep --color=auto'
   alias egrep='egrep --color=auto'
+  alias zgrep='zgrep --color=auto'
+
+  #Colorize man pages
+  export LESS_TERMCAP_mb=$'\e[1;32m'
+  export LESS_TERMCAP_md=$'\e[1;32m'
+  export LESS_TERMCAP_me=$'\e[0m'
+  export LESS_TERMCAP_se=$'\e[0m'
+  export LESS_TERMCAP_so=$'\e[01;33m'
+  export LESS_TERMCAP_ue=$'\e[0m'
+  export LESS_TERMCAP_us=$'\e[1;4;31m'
 fi
 
 # make less more friendly for non-text input files, see lesspipe(1)

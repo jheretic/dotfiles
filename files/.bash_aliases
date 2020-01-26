@@ -1,27 +1,33 @@
 #ALIASES
-alias ls='ls -h --color=auto'
+#alias ls='ls --color=auto'
 #alias ll='ls --color=auto -lah'
 #alias la='ls --color=auto -lah'
 #alias lls='ls -lah --color=auto --sort=size --reverse'
-#alias llt='ls -lah --color=auto --sort=time --reverse' 
-alias cp='cp -v'
-alias mv='mv -v'
-alias rm='rm -v'
-alias df='df -ha'
-alias du='du -hc'
-alias grep='grep --color=auto'
-alias zgrep='zgrep --color=auto'
+#alias llt='ls -lah --color=auto --sort=time --reverse'
+#alias cp='cp -v'
+#alias mv='mv -v'
+#alias rm='rm -v'
+#alias df='df -ha'
+#alias du='du -hc'
+#alias diff='diff --color=auto'
+#alias grep='grep --color=auto'
+#alias egrep='egrep --color=auto'
+#alias fgrep='fgrep --color=auto'
+#alias zgrep='zgrep --color=auto'
 #alias nano='nano -wm'
 #alias vim='vim -p'
 #
-alias psgrep="ps aux | grep -v 'grep --color=auto -e %MEM' | grep -e %MEM -e" 
-alias modgrep="lsmod | grep -v 'grep --color=auto -e %MEM' | grep -e %MEM -e" 
+alias psgrep="ps aux | grep -v 'grep --color=auto -e %MEM' | grep -e %MEM -e"
+alias modgrep="lsmod | grep -v 'grep --color=auto -e %MEM' | grep -e %MEM -e"
 #
-alias dirs="dirs -v"
-alias free="free -m" 
+#alias dirs="dirs -v"
+#alias free="free -m"
 #
 #alias tarz='tar -zxvvf'
 #alias tarj='tar -jxvvf'
+
+command -v lsd &>/dev/null && alias ls='lsd --group-dirs first'
+command -v btm &>/dev/null && alias top='btm'
 #
 alias hist='history | grep $1' #Requires one input
 #
@@ -34,8 +40,7 @@ alias findbig=_findbig #find large files
 #}
 #
 ## finds big files (50MB with no parameter)
-function _findbig()
-{
+function _findbig() {
   local meg="${1-50}"
-  find -size +$(($meg*1024))k -exec du -h {} \; 2>/dev/null
+  find -size +$(($meg * 1024))k -exec du -h {} \; 2>/dev/null
 }

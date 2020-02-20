@@ -36,6 +36,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -45,16 +46,18 @@ let g:airline#extensions#tabline#enabled = 1 " Enable Airline for tabs
 let g:airline#extensions#ale#enabled = 1 " Enable Airline for ALE
 let g:airline_powerline_fonts = 1
 
-"let g:ale_linters = {'javascript': ['eslint'], 'rust': ['rustfmt'], 'C': ['cppcheck', 'flawfinder'], 'go': ['gofmt'], 'python': ['black', 'yapf'], 'json': ['prettier'], 'markdown': ['prettier'], 'sh': ['shfmt'] }
+let g:ale_linters = {'javascript': ['eslint'], 'javascriptreact': ['eslint'], 'rust': ['rustfmt'], 'C': ['cppcheck', 'flawfinder'], 'go': ['gofmt'], 'python': ['black', 'yapf'], 'json': ['prettier'], 'markdown': ['prettier'], 'html': ['prettier'], 'sh': ['shfmt'] }
 let g:ale_fixers = {
     \ '*': [ 'remove_trailing_lines', 'trim_whitespace'],
     \ 'javascript': ['eslint'],
+    \ 'javascriptreact': ['eslint'],
     \ 'rust': ['rustfmt'],
     \ 'C': ['cppcheck', 'flawfinder'],
     \ 'go': ['gofmt'],
     \ 'python': ['black', 'yapf'],
     \ 'json': ['prettier'],
     \ 'markdown': ['prettier'],
+    \ 'html': ['prettier'],
     \ 'sh': ['shfmt']
     \ }
 let g:ale_fix_on_save = 1
@@ -62,6 +65,12 @@ let g:ale_fix_on_save = 1
 let g:ale_python_auto_pipenv = 1
 
 let g:BASH_MapLeader  = '\'
+
+"let g:python_host_prog = '~/.pyenv/versions/neovim2/bin/python'
+"let g:python3_host_prog = '~/.pyenv/versions/neovim3/bin/python'
+"let g:ruby_host_prog = system('rbenv whence --path neovim-ruby-host')
+"let g:ruby_host_prog = '~/.rbenv/versions/2.6.5/bin/neovim-ruby-host'
+"let g:ruby_host_prog = $NVIM_RUBY_HOST
 
 let g:deoplete#enable_at_startup = 1 " Use deoplete
 " Let <Tab> also do completion
@@ -77,16 +86,13 @@ endfunction"}}}
 " Close the documentation window when completion is done
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
-"let g:python_host_prog = '/usr/bin/python2'
-"let g:python3_host_prog = '/usr/bin/python'
-
 " LanguageServer
 " Required for operations modifying multiple buffers like rename.
 set hidden
 
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'javascript': ['flow-language-server', '--stdio'],
+    \ 'javascript': ['javascript-typescript-stdio'],
     \ 'python': ['pyls'],
     \ 'go': ['gopls'],
     \ 'C': ['ccls'],
@@ -124,9 +130,9 @@ nmap <silent> <A-Right> :wincmd l<CR>
 " Tabs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <right> <ESC>:tabn<RETURN> " right arrow (normal mode) switches buffers  (excluding minibuf)
-map <left> <ESC>:tabp<RETURN> " left arrow (normal mode) switches buffers (excluding minibuf) 
+map <left> <ESC>:tabp<RETURN> " left arrow (normal mode) switches buffers (excluding minibuf)
 map <C-right> <ESC>:bn<RETURN> " right arrow (normal mode) switches buffers  (excluding minibuf)
-map <C-left> <ESC>:bp<RETURN> " left arrow (normal mode) switches buffers (excluding minibuf) 
+map <C-left> <ESC>:bp<RETURN> " left arrow (normal mode) switches buffers (excluding minibuf)
 " tab navigation like firefox
 map <a-1> <ESC>1gt<RETURN>
 map <a-2> <ESC>2gt<RETURN>
@@ -157,7 +163,7 @@ imap <C-t> <Esc>:tabnew<CR>
 "set guioptions-=L  "remove left-hand scroll bar
 "set guioptions-=b  "remove bottom scroll bar
 set guioptions+=mTLlRrb
-set guioptions-=mTLlRrb 
+set guioptions-=mTLlRrb
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Miscellaneous

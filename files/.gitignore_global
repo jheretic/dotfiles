@@ -3,6 +3,8 @@ TAGS
 .TAGS
 !TAGS/
 tags
+tags.lock
+tags.temp
 .tags
 !tags/
 gtags.files
@@ -14,4 +16,3 @@ cscope.files
 cscope.out
 cscope.in.out
 cscope.po.out
-

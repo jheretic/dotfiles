@@ -4,6 +4,8 @@ install-bash:
 	ln -sf `pwd`/files/.bashrc ~/.bashrc
 	ln -sf `pwd`/files/.bash_profile ~/.bash_profile
 	ln -sf `pwd`/files/.bash_aliases ~/.bash_aliases
+	mkdir -p ~/.config/environment.d
+	ln -sf `pwd`/files/.config/environment.d/99-envvars.conf ~/.config/environment.d/99-envvars.conf
 
 install-vim:
 	mkdir -p ~/.config/nvim
@@ -23,7 +25,6 @@ install-x:
 
 install-apps:
 	mkdir -p ~/.local/share/applications
-	ln -sf `pwd`/files/.local/share/applications/firefox-test.desktop ~/.local/share/applications/firefox-test.desktop
 
 install-directories:
 	mkdir -p ~/aud ~/doc/templates ~/emu ~/img ~/net/torrents ~/pub ~/src/scratch ~/top ~/vid/{tv,movies,trailers,music_videos} ~/www ~/.bak ~/.tmp ~/.config

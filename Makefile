@@ -1,23 +1,29 @@
-install: install-bash install-vim install-top install-screen install-x install-directories install-screen install-git
+install: install-zsh install-env install-vim install-top install-tmux install-directories install-screen install-git
 
 install-bash:
 	ln -sf `pwd`/files/.bashrc ~/.bashrc
 	ln -sf `pwd`/files/.bash_profile ~/.bash_profile
 	ln -sf `pwd`/files/.bash_aliases ~/.bash_aliases
+
+install-env:
 	mkdir -p ~/.config/environment.d
 	ln -sf `pwd`/files/.config/environment.d/99-envvars.conf ~/.config/environment.d/99-envvars.conf
+
+install-zsh:
+	ln -sf `pwd`/files/.zshrc ~/.zshrc
 
 install-vim:
 	mkdir -p ~/.config/nvim
 	ln -sf `pwd`/files/.config/nvim/init.vim ~/.config/nvim/init.vim
-	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-		https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 install-top:
 	ln -sf `pwd`/files/.toprc ~/.toprc
 
 install-screen:
 	ln -sf `pwd`/files/.screenrc ~/.screenrc
+
+install-tmux:
+	ln -sf `pwd`/files/.tmux.conf ~/.tmux.conf
 
 install-x:
 	ln -sf `pwd`/files/.Xdefaults ~/.Xdefaults

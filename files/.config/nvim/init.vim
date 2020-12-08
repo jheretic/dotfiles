@@ -10,10 +10,9 @@ Pack 'k-takata/minpac', {'type': 'opt'}
 " lsp
 Pack 'neovim/nvim-lspconfig'
 Pack 'nvim-lua/completion-nvim'
-Pack 'nvim-lua/diagnostic-nvim'
 Pack 'weilbith/nvim-lsp-smag'
 Pack 'RishabhRD/popfix'
-"Pack 'RishabhRD/nvim-lsputils'
+Pack 'RishabhRD/nvim-lsputils'
 Pack 'nvim-lua/lsp-status.nvim'
 
 " snippets
@@ -47,7 +46,7 @@ Pack 'machakann/vim-sandwich'
 Pack 'tpope/vim-commentary'
 Pack 'tpope/vim-sleuth'
 Pack 'editorconfig/editorconfig-vim'
-Pack 'w0rp/ale'
+"Pack 'w0rp/ale'
 
 " tmux
 Pack 'christoomey/vim-tmux-navigator'
@@ -70,119 +69,9 @@ call plugpac#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""
-" completion-nvim & diagnostic-nvim
+" completion-nvim & treesitter
 """"""""""""""""""""""""""""""""""""
-lua <<EOF
-local nvim_lsp = require('nvim_lsp')
-local lsp_status = require('lsp-status')
-lsp_status.register_progress()
-local on_attach_vim = function(client)
-  require'completion'.on_attach(client)
-  require'diagnostic'.on_attach(client)
-  lsp_status.on_attach(client)
-  capabilities = vim.tbl_extend('keep', capabilities or {}, lsp_status.capabilities)
-end
-vim.cmd('packadd nvim-lspconfig')
-nvim_lsp.bashls.setup{on_attach=on_attach_vim}
-nvim_lsp.cmake.setup{on_attach=on_attach_vim}
-nvim_lsp.cssls.setup{on_attach=on_attach_vim}
-nvim_lsp.diagnosticls.setup{
-  on_attach=on_attach_vim,
-  filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'css', 'markdown' },
-  init_options = {
-    linters = {
-      eslint = {
-        sourceName = "eslint",
-        command = "./node_modules/.bin/eslint",
-        rootPatterns = { ".git" },
-        debounce = 100,
-        args = {
-          "--stdin",
-          "--stdin-filename",
-          "%filepath",
-          "--format",
-          "json",
-        },
-        parseJson = {
-          errorsRoot = "[0].messages",
-          line = "line",
-          column = "column",
-          endLine = "endLine",
-          endColumn = "endColumn",
-          message = "${message} [${ruleId}]",
-          security = "severity",
-        },
-        securities = {
-          [2] = "error",
-          [1] = "warning"
-        }
-      },
-      markdownlint = {
-        command = 'markdownlint',
-        rootPatterns = { '.git' },
-        isStderr = true,
-        debounce = 100,
-        args = { '--stdin' },
-        offsetLine = 0,
-        offsetColumn = 0,
-        sourceName = 'markdownlint',
-        securities = {
-          undefined = 'hint'
-        },
-        formatLines = 1,
-        formatPattern = {
-          '^.*:(\\d+)\\s+(.*)$',
-          {
-            line = 1,
-            column = -1,
-            message = 2,
-          }
-        }
-      }
-    },
-    filetypes = {
-      javascript = "eslint",
-      javascriptreact = "eslint",
-      typescript = "eslint",
-      typescriptreact = "eslint",
-      markdown = "markdownlint",
-    },
-    formatters = {
-      eslintFix = {
-        command = "./node_modules/.bin/eslint",
-        rootPatterns = { ".git" },
-        args = {
-          "--stdin",
-          "--fix",
-        },
-        isStderr = false,
-        isStdout = true
-      }
-    },
-    formatFiletypes = {
-      javascript = 'eslintFix',
-      javascriptreact = 'eslintFix',
-      ['javascript.jsx'] = 'eslintFix',
-      json = 'eslintFix',
-      typescript = 'eslintFix',
-      typescriptreact = 'eslintFix'
-    }
-  }
-}
-nvim_lsp.dockerls.setup{on_attach=on_attach_vim}
-nvim_lsp.gopls.setup{on_attach=on_attach_vim}
-nvim_lsp.html.setup{on_attach=on_attach_vim}
-nvim_lsp.jsonls.setup{on_attach=on_attach_vim}
-nvim_lsp.kotlin_language_server.setup{on_attach=on_attach_vim}
-nvim_lsp.pyls.setup{on_attach=on_attach_vim}
-nvim_lsp.rust_analyzer.setup{on_attach=on_attach_vim}
-nvim_lsp.solargraph.setup{on_attach=on_attach_vim}
-nvim_lsp.sqlls.setup{on_attach=on_attach_vim}
-nvim_lsp.sumneko_lua.setup{on_attach=on_attach_vim}
-nvim_lsp.tsserver.setup{on_attach=on_attach_vim}
-nvim_lsp.vimls.setup{on_attach=on_attach_vim}
-nvim_lsp.yamlls.setup{on_attach=on_attach_vim}
-EOF
+lua require("lsp_config")
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -197,72 +86,11 @@ set shortmess+=c
 nmap <tab> <Plug>(completion_smart_tab)
 nmap <s-tab> <Plug>(completion_smart_s_tab)
 
-let g:diagnostic_enable_virtual_text = 1
-let g:diagnostic_show_sign = 1
-let g:diagnostic_sign_priority = 20
-let g:diagnostic_enable_underline = 1
-let g:diagnostic_virtual_text_prefix = ' '
-call sign_define("LspDiagnosticsErrorSign", {"text" : "", "texthl" : "LspDiagnosticsError"})
-call sign_define("LspDiagnosticsWarningSign", {"text" : "", "texthl" : "LspDiagnosticsWarning"})
-call sign_define("LspDiagnosticsInformationSign", {"text" : "", "texthl" : "LspDiagnosticsInformation"})
-call sign_define("LspDiagnosticsHintSign", {"text" : "", "texthl" : "LspDiagnosticsHint"})
-
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-
-" Auto-format files prior to saving them
-augroup format
-  autocmd! *
-  autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 1000)
-augroup END
-
-
-""""""""""""""""
-" nvim-lsputils
-""""""""""""""""
-"lua <<EOF
-"vim.cmd('packadd nvim-lsputils')
-"vim.cmd('packadd popfix')
-"vim.lsp.callbacks['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
-"vim.lsp.callbacks['textDocument/references'] = require'lsputil.locations'.references_handler
-"vim.lsp.callbacks['textDocument/definition'] = require'lsputil.locations'.definition_handler
-"vim.lsp.callbacks['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
-"vim.lsp.callbacks['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
-"vim.lsp.callbacks['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
-"vim.lsp.callbacks['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
-"vim.lsp.callbacks['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
-"EOF
-
-""""""""""""""""""
-" nvim-treesitter
-""""""""""""""""""
-
-lua <<EOF
-vim.cmd('packadd nvim-treesitter')
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "all",     -- one of "all", "language", or a list of languages
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-    -- disable = { "c", "rust" },  -- list of language that will be disabled
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
-    },
-  },
-}
-EOF
+" Set custom diagnostic signs
+sign define LspDiagnosticsSignError text= texthl=LspDiagnosticsSignError linehl= numhl=
+sign define LspDiagnosticsSignWarning text= texthl=LspDiagnosticsSignWarning linehl= numhl=
+sign define LspDiagnosticsSignInformation text= texthl=LspDiagnosticsSignInformation linehl= numhl=
+sign define LspDiagnosticsSignHint text= texthl=LspDiagnosticsSignHint linehl= numhl=
 
 """"""""""""""""""
 " vim-crystalline
@@ -396,30 +224,6 @@ let g:fzf_colors =
   \ { 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'] }
 
-""""""
-" ale
-""""""
-let g:ale_linters_explicit = 1
-"let g:ale_linters = {'javascript': ['eslint'], 'javascriptreact': ['eslint'], 'typescript': ['eslint --ext ts,tsx'], 'rust': ['rustfmt'], 'C': ['cppcheck', 'flawfinder'], 'go': ['gofmt'], 'python': ['black', 'yapf'], 'json': ['prettier'], 'markdown': ['prettier'], 'html': ['prettier'], 'sh': ['shfmt'] }
-let g:ale_fixers = {
-    \ '*': [ 'remove_trailing_lines', 'trim_whitespace'],
-    \ 'javascript': ['eslint'],
-    \ 'javascriptreact': ['eslint'],
-    \ 'typescript': ['eslint'],
-    \ 'rust': ['rustfmt'],
-    \ 'C': ['cppcheck', 'flawfinder'],
-    \ 'go': ['gofmt'],
-    \ 'python': ['black', 'yapf'],
-    \ 'json': ['prettier'],
-    \ 'markdown': ['prettier'],
-    \ 'html': ['prettier'],
-    \ 'sh': ['shfmt']
-    \ }
-let g:ale_fix_on_save = 1
-"
-let g:ale_python_auto_pipenv = 1
-let g:ale_disable_lsp = 1
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Line numbers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -446,6 +250,12 @@ colorscheme sonokai " my theme
 nmap <down>  :MinimapToggle<CR>
 "" Open and close netrw separately
 nmap <up> :Fern . -drawer -toggle<CR>
+
+" Set tabs to 2
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set noexpandtab
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Windows

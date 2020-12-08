@@ -24,7 +24,9 @@ install-screen:
 	ln -sf `pwd`/files/.screenrc ~/.screenrc
 
 install-tmux:
+	mkdir -p ~/.tmux/tmuxline
 	ln -sf `pwd`/files/.tmux.conf ~/.tmux.conf
+	ln -sf `pwd`/files/.tmux/tmuxline/sonokai-custom.conf ~/.tmux/tmuxline/sonokai-custom.conf
 
 install-x:
 	ln -sf `pwd`/files/.Xdefaults ~/.Xdefaults

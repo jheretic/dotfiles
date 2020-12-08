@@ -1,0 +1,20 @@
+# Import additional configuration files
+#
+# These configuration files will be loaded in order, replacing values in files
+# loaded earlier with those loaded later in the chain. The file itself will
+# always be loaded last.
+import:
+  - .config/alacritty/alacritty.yml
+
+shell:
+  program: /usr/bin/zsh
+  args:
+    - -l
+    - -c
+    - "tmux attach || tmux"
+
+window:
+  # Window decorations
+  # Setting this to false will result in window without borders and title bar.
+  decorations: none
+  dynamic_title: true

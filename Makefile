@@ -28,6 +28,11 @@ install-tmux:
 	ln -sf `pwd`/files/.tmux.conf ~/.tmux.conf
 	ln -sf `pwd`/files/.tmux/tmuxline/sonokai-custom.conf ~/.tmux/tmuxline/sonokai-custom.conf
 
+install-alacritty:
+	mkdir -p ~/.config/alacritty
+	ln -sf `pwd`/files/.config/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
+	ln -sf `pwd`/files/.config/alacritty/dropdown.yml ~/.config/alacritty/dropdown.yml
+
 install-x:
 	ln -sf `pwd`/files/.Xdefaults ~/.Xdefaults
 	ln -sf `pwd`/files/.xprofile ~/.xprofile

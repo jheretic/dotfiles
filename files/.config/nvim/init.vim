@@ -21,6 +21,8 @@ Pack 'hrsh7th/vim-vsnip-integ'
 
 " search
 Pack 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Pack 'junegunn/fzf.vim'
+Pack 'ojroques/nvim-lspfuzzy'
 
 " Icons
 Pack 'lambdalisue/nerdfont.vim'
@@ -46,14 +48,18 @@ Pack 'machakann/vim-sandwich'
 Pack 'tpope/vim-commentary'
 Pack 'tpope/vim-sleuth'
 Pack 'editorconfig/editorconfig-vim'
-"Pack 'w0rp/ale'
+
+" debugging
+Pack 'mfussenegger/nvim-dap'
+Pack 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Pack 'theHamsta/nvim-dap-virtual-text'
 
 " tmux
 Pack 'christoomey/vim-tmux-navigator'
+Pack 'roxma/vim-tmux-clipboard'
 
 " experience
 Pack 'rbong/vim-crystalline'
-Pack 'nvim-treesitter/nvim-treesitter'
 Pack 'psliwka/vim-smoothie'
 Pack 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 Pack 'sainnhe/sonokai'
@@ -61,6 +67,7 @@ Pack 'sainnhe/artify.vim'
 Pack 'jeffkreeftmeijer/vim-numbertoggle'
 Pack 'mhinz/vim-startify'
 Pack 'tpope/vim-obsession'
+Pack 'jdhao/better-escape.vim'
 
 call plugpac#end()
 
@@ -224,10 +231,23 @@ let g:fzf_colors =
   \ { 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'] }
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Line numbers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set number relativenumber
+"""""""""""
+" nvim-dap
+"""""""""""
+" virtual text deactivated (default)
+let g:dap_virtual_text = 0
+" show virtual text for current frame (recommended)
+let g:dap_virtual_text = 1
+" request variable values for all frames (experimental)
+let g:dap_virtual_text = 'all frames'
+
+"""""""""""
+" nvim-dap
+"""""""""""
+" set keypress interval to 200ms
+let g:better_escape_interval = 200
+" use jj to escape insert mode
+let g:better_escape_shortcut = 'jj'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Theme/Colors
@@ -251,11 +271,33 @@ nmap <down>  :MinimapToggle<CR>
 "" Open and close netrw separately
 nmap <up> :Fern . -drawer -toggle<CR>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set tabs to 2
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set noexpandtab
+
+" Smarter indenting
+set smarttab
+set smartindent
+set autoindent
+
+" Split correctly
+set splitbelow
+set splitright
+
+" Line numbers
+set number relativenumber
+
+" Auto-reload on file changes
+set autoread
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+" notification after file change
+autocmd FileChangedShellPost *
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Windows

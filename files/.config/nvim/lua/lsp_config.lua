@@ -8,18 +8,21 @@ local map = function(type, key, value)
 end
 
 function do_format()
-  --vim.lsp.buf.formatting_sync(nil, 1000)
-  vim.lsp.buf.formatting()
+  print(string.format('PRE-FORMATTING!'))
+  vim.lsp.buf.formatting_sync(nil, 1000)
+  print(string.format('POST-FORMATTING!'))
+  --vim.lsp.buf.formatting()
 end
 
 local attach_formatting = function(client)
   -- Skip tsserver for now so we dont format things twice
-  -- if client.name == "tsserver" then return end
+  if client.name == "tsserver" then return end
+  if client.name == "cssls" then return end
   print(string.format('attaching format to %s', client.name))
 
-  vim.api.nvim_command [[augroup Format]]
+  vim.api.nvim_command [[augroup AutoFormat]]
   vim.api.nvim_command [[autocmd! * <buffer>]]
-  vim.api.nvim_command [[autocmd BufWritePost <buffer> lua do_format()]]
+  vim.api.nvim_command [[autocmd BufWritePre <buffer> lua do_format()]]
   vim.api.nvim_command [[augroup END]]
 end
 
@@ -202,24 +205,25 @@ vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declar
 vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
 vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
 vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
-vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
-    if err ~= nil or result == nil then
-        return
-    end
-    if not vim.api.nvim_buf_get_option(bufnr, "modified") then
-        local view = vim.fn.winsaveview()
-        vim.lsp.util.apply_text_edits(result, bufnr)
-        vim.fn.winrestview(view)
-        if bufnr == vim.api.nvim_get_current_buf() then
-            vim.api.nvim_command("noautocmd :update")
-        end
-    end
-end
+--vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
+--    if err ~= nil or result == nil then
+--        return
+--    end
+--    if not vim.api.nvim_buf_get_option(bufnr, "modified") then
+--        local view = vim.fn.winsaveview()
+--        vim.lsp.util.apply_text_edits(result, bufnr)
+--        vim.fn.winrestview(view)
+--        if bufnr == vim.api.nvim_get_current_buf() then
+--            vim.api.nvim_command("noautocmd :update")
+--            --vim.api.nvim_command("noautocmd e")
+--        end
+--    end
+--end
 vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
 
 -- nvim-treesitter
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "all",     -- one of "all", "language", or a list of languages
+  ensure_installed = "maintained",     -- one of "all", "language", or a list of languages
   highlight = {
     enable = true,              -- false will disable the whole extension
     -- disable = { "c", "rust" },  -- list of language that will be disabled

@@ -1,240 +1,149 @@
 local lspconfig = require('lspconfig')
-local lsp_status = require('lsp-status')
+local saga = require('lspsaga')
+--local lsp_status = require('lsp-status')
 
--- completion-nvim & diagnostic-nvim
+saga.init_lsp_saga()
+-------------------- HELPERS -------------------------------
+local cmd, fn = vim.cmd, vim.fn
 
-local map = function(type, key, value)
-  vim.fn.nvim_buf_set_keymap(0,type,key,value,{noremap = true, silent = true});
-end
+local helpers = require('helpers')
+local map = helpers.map
 
-function do_format()
-  print(string.format('PRE-FORMATTING!'))
-  vim.lsp.buf.formatting_sync(nil, 1000)
-  print(string.format('POST-FORMATTING!'))
-  --vim.lsp.buf.formatting()
-end
-
-local attach_formatting = function(client)
-  -- Skip tsserver for now so we dont format things twice
-  if client.name == "tsserver" then return end
-  if client.name == "cssls" then return end
-  print(string.format('attaching format to %s', client.name))
-
-  vim.api.nvim_command [[augroup AutoFormat]]
-  vim.api.nvim_command [[autocmd! * <buffer>]]
-  vim.api.nvim_command [[autocmd BufWritePre <buffer> lua do_format()]]
-  vim.api.nvim_command [[augroup END]]
-end
+-------------------- CALLBACKS -----------------------------
 
 local on_attach_vim = function(client)
-  lsp_status.register_progress()
-  lsp_status.register_client(client.name);
-  lsp_status.config({
-    current_function = true,
-    indicator_errors = '',
-    indicator_warnings = '',
-    indicator_info = '',
-    indicator_hint = '',
-    indicator_ok = '',
+  cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
+
+  -- commented options are defaults
+  require('lspkind').init({
+      -- with_text = true,
+      -- symbol_map = {
+      --   Text = '',
+      --   Method = 'ƒ',
+      --   Function = '',
+      --   Constructor = '',
+      --   Variable = '',
+      --   Class = '',
+      --   Interface = 'ﰮ',
+      --   Module = '',
+      --   Property = '',
+      --   Unit = '',
+      --   Value = '',
+      --   Enum = '了',
+      --   Keyword = '',
+      --   Snippet = '﬌',
+      --   Color = '',
+      --   File = '',
+      --   Folder = '',
+      --   EnumMember = '',
+      --   Constant = '',
+      --   Struct = ''
+      -- },
   })
-  print("'" .. client.name .. "' language server attached");
-  require'completion'.on_attach(client)
-  require"lsp-status".on_attach(client)
 
-  vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
+  cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 
-  --capabilities = vim.tbl_extend('keep', capabilities or {}, lsp_status.capabilities)
-  if client.resolved_capabilities.document_formatting then
-    print(string.format("Formatting supported %s", client.name))
+--  map('n','gD','<cmd>lua vim.lsp.buf.declaration()<CR>')
+--  map('n','gd','<cmd>lua vim.lsp.buf.definition()<CR>')
+--  --map('n','K','<cmd>lua vim.lsp.buf.hover()<CR>')
+--  map('n','gr','<cmd>lua vim.lsp.buf.references()<CR>')
+--  map('n','gs','<cmd>lua vim.lsp.buf.signature_help()<CR>')
+--  map('n','gi','<cmd>lua vim.lsp.buf.implementation()<CR>')
+--  map('n','gt','<cmd>lua vim.lsp.buf.type_definition()<CR>')
+--  map('n','<leader>gw','<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+--  map('n','<leader>gW','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
+--  map('n','<leader>ah','<cmd>lua vim.lsp.buf.hover()<CR>')
+--  map('n','<leader>af','<cmd>lua vim.lsp.buf.code_action()<CR>')
+--  map('n','<leader>ee','<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>')
+--  map('n','<leader>ar','<cmd>lua vim.lsp.buf.rename()<CR>')
+--  map('n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+--  map('n','<leader>ai','<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
+--  map('n','<leader>ao','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
+--  map('n','<leader>gd','<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+--  map('n','<leader>gD','<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 
-    attach_formatting(client)
-  end
+  map('n', 'gh', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>')
+  map('n', '<leader>ca', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>')
+  map('v', '<leader>ca', "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>")
+  map('n', 'K', "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>")
+  map('n', '<C-f>', "<cmd>lua require('lspsaga.hover').smart_scroll_hover(1)<CR>")
+  map('n', '<C-b>', "<cmd>lua require('lspsaga.hover').smart_scroll_hover(-1)<CR>")
+  map('n', 'gs', "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>")
+  map('n', 'gr', "<cmd>lua require('lspsaga.rename').rename()<CR>")
+  map('n', 'gd', "<cmd>lua require('lspsaga.provider').preview_definition()<CR>")
+  map('n', '<leader>cd', "<cmd>lua require('lspsaga.diagnostic').show_line_diagnostics()<CR>")
+  map('n', '[e', "<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_prev()<CR>")
+  map('n', ']e', "<cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_next()<CR>")
+  map('n', '<A-d>', "<cmd>lua require('lspsaga.floaterm').open_float_terminal()<CR>")
+  map('t', '<A-d>', [[<C-\><C-n><cmd>lua require('lspsaga.floaterm').close_float_terminal()<CR>]])
 
-  map('n','gD','<cmd>lua vim.lsp.buf.declaration()<CR>')
-  map('n','gd','<cmd>lua vim.lsp.buf.definition()<CR>')
-  map('n','K','<cmd>lua vim.lsp.buf.hover()<CR>')
-  map('n','gr','<cmd>lua vim.lsp.buf.references()<CR>')
-  map('n','gs','<cmd>lua vim.lsp.buf.signature_help()<CR>')
-  map('n','gi','<cmd>lua vim.lsp.buf.implementation()<CR>')
-  map('n','gt','<cmd>lua vim.lsp.buf.type_definition()<CR>')
-  map('n','<leader>gw','<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-  map('n','<leader>gW','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
-  map('n','<leader>ah','<cmd>lua vim.lsp.buf.hover()<CR>')
-  map('n','<leader>af','<cmd>lua vim.lsp.buf.code_action()<CR>')
-  map('n','<leader>ee','<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>')
-  map('n','<leader>ar','<cmd>lua vim.lsp.buf.rename()<CR>')
-  map('n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-  map('n','<leader>ai','<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
-  map('n','<leader>ao','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
-  map('n','<leader>gd','<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-  map('n','<leader>gD','<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+  require 'illuminate'.on_attach(client)
 end
 
-local default_lsp_config = {on_attach = on_attach_vim, capabilities = lsp_status.capabilities}
+-------------------- LSP -----------------------------------
+--local default_lsp_config = {on_attach = on_attach_vim, capabilities = lsp_status.capabilities}
+local default_lsp_config = {on_attach = on_attach_vim}
 
-local servers = {"bashls", "cmake", "cssls", "dockerls", "gopls", "html", "jsonls", "kotlin_language_server", "pyls", "rust_analyzer", "solargraph", "sqlls", "sumneko_lua", "tsserver", "vimls", "yamlls"}
+local servers = {"bashls", "cmake", "cssls", "dockerls", "gopls", "html", "jsonls", "kotlin_language_server", "pyls", "rust_analyzer", "solargraph", "sqlls", "vimls", "yamlls"}
 
---lspconfig.efm.setup{
---	filetypes = {"javascript", "typescript"},
---	--cmd = {"efm-langserver", "-logfile", "/tmp/efm.log", "-loglevel", "2"},
---	on_attach=on_attach_vim,
---	--root_dir = lspconfig.util.root_pattern("RCS/", "SCCS/", "CVS/", ".git/", ".svn/", ".hg/", ".bzr/", "_darcs/", ".git"),
---	-- Enable document formatting (other capabilities are off by default).
---	init_options = {
---		documentFormatting = true,
---		hover = true,
---		documentSymbol = true,
---		codeAction = true,
---		completion = true,
---	},
---	settings = {
---		rootMarkers = {"RCS/", "SCCS/", "CVS/", ".git/", ".svn/", ".hg/", ".bzr/", "_darcs/", ".git"},
---		languages = {
---			javascript = {
---				{
---	       				lintCommand = "npx eslint -f unix --stdin --stdin-filename ${INPUT}",
---					lintIgnoreExitCode = true,
---					lintStdin = true,
---					formatCommand = "npx eslint --fix ${INPUT}",
---					formatStdin = true,
---					rootMarkers = {
---						"package.json", ".eslintrc.js", ".eslintrc.yaml", ".eslintrc.yml", ".eslintrc.json"
---					}
---				}
---			},
---			typescript = {
---				{
---	       				lintCommand = "npx eslint -f unix --stdin --stdin-filename ${INPUT}",
---					lintIgnoreExitCode = true,
---					lintStdin = true,
---					formatCommand = "npx eslint --fix ${INPUT}",
---					formatStdin = true,
---					rootMarkers = {
---						"package.json", ".eslintrc.js", ".eslintrc.yaml", ".eslintrc.yml", ".eslintrc.json"
---					}
---				}
---			},
---		},
---	}
---}
+lspconfig.tsserver.setup {
+  on_attach = function(client)
+    client.resolved_capabilities.document_formatting = false
+    on_attach_vim(client)
+  end
+}
 
-lspconfig.diagnosticls.setup {
+lspconfig.sumneko_lua.setup {
   on_attach = on_attach_vim,
+--  capabilities = lsp_status.capabilities,
+  settings = {
+    Lua = {
+      diagnostics = {
+          globals = { 'vim' }
+      }
+    }
+  }
+}
+
+local eslint = {
+  lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
+  lintStdin = true,
+  lintFormats = {"%f:%l:%c: %m"},
+  lintIgnoreExitCode = true,
+}
+
+lspconfig.efm.setup {
+  init_options = {documentFormatting = false},
+  on_attach = function(client)
+    client.resolved_capabilities.document_formatting = false
+    --client.resolved_capabilities.goto_definition = false
+    on_attach_vim(client)
+  end,
+  settings = {
+    rootMarkers = {".git/"},
+    languages = {
+      javascript = {eslint},
+      javascriptreact = {eslint},
+      ["javascript.jsx"] = {eslint},
+      typescript = {eslint},
+      ["typescript.tsx"] = {eslint},
+      typescriptreact = {eslint}
+    }
+  },
   filetypes = {
     "javascript",
     "javascriptreact",
+    "javascript.jsx",
     "typescript",
-    "typescriptreact",
     "typescript.tsx",
-    "css",
-    "scss",
-    "markdown",
-    -- "pandoc",
-  },
-  init_options = {
-    linters = {
-      eslint = {
-        command = "eslint",
-        rootPatterns = {".git", ".eslintrc", ".eslintrc.json", ".eslintrc.js"},
-        debounce = 100,
-        args = {"--stdin", "--stdin-filename", "%filepath", "--format", "json"},
-        sourceName = "eslint",
-        parseJson = {
-          errorsRoot = "[0].messages",
-          line = "line",
-          column = "column",
-          endLine = "endLine",
-          endColumn = "endColumn",
-          message = "[eslint] ${message} [${ruleId}]",
-          security = "severity",
-        },
-        securities = {[2] = "error", [1] = "warning"},
-      },
-      markdownlint = {
-        command = "markdownlint",
-        rootPatterns = {".git"},
-        isStderr = true,
-        debounce = 100,
-        args = {"--stdin"},
-        offsetLine = 0,
-        offsetColumn = 0,
-        sourceName = "markdownlint",
-        securities = {undefined = "hint"},
-        formatLines = 1,
-        formatPattern = {"^.*:(\\d+)\\s+(.*)$", {line = 1, column = -1, message = 2}},
-      },
-    },
-    filetypes = {
-      javascript = "eslint",
-      javascriptreact = "eslint",
-      typescript = "eslint",
-      typescriptreact = "eslint",
-      ["typescript.tsx"] = "eslint",
-      markdown = "markdownlint",
-      -- pandoc = "markdownlint",
-    },
-    formatters = {
-      eslint = {
-        command = "eslint",
-        args = {"--fix", "%file"},
-        doesWriteToFile = true,
-        rootPatterns = {"package.json", ".eslintrc", ".eslintrc.json", ".eslintrc.js", ".git"},
-      },
-      prettier = {command = "prettier", args = {"--stdin-filepath", "%filename"}},
-    },
-    formatFiletypes = {
-      css = "prettier",
-      javascript = "eslint",
-      javascriptreact = "eslint",
-      json = "prettier",
-      scss = "prettier",
-      typescript = "eslint",
-      typescriptreact = "eslint",
-      --["typescript.tsx"] = "eslint",
-    },
+    "typescriptreact"
   },
 }
 
 for _, server in ipairs(servers) do lspconfig[server].setup(default_lsp_config) end
 
--- nvim-lsputils
-vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
-vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler
-vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
-vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
-vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
-vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
-vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
---vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
---    if err ~= nil or result == nil then
---        return
---    end
---    if not vim.api.nvim_buf_get_option(bufnr, "modified") then
---        local view = vim.fn.winsaveview()
---        vim.lsp.util.apply_text_edits(result, bufnr)
---        vim.fn.winrestview(view)
---        if bufnr == vim.api.nvim_get_current_buf() then
---            vim.api.nvim_command("noautocmd :update")
---            --vim.api.nvim_command("noautocmd e")
---        end
---    end
---end
-vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
-
--- nvim-treesitter
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",     -- one of "all", "language", or a list of languages
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-    -- disable = { "c", "rust" },  -- list of language that will be disabled
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
-    },
-  },
-}
+-------------------- HANDLERS ------------------------------
+fn.sign_define('LspDiagnosticsSignError', { text = "", texthl = "LspDiagnosticsSignError" })
+fn.sign_define('LspDiagnosticsSignWarning', { text = "", texthl = "LspDiagnosticsSignWarning" })
+fn.sign_define('LspDiagnosticsSignInformation', { text = "", texthl = "LspDiagnosticsSignInformation" })
+fn.sign_define('LspDiagnosticsSignHint', { text = "", texthl = "LspDiagnosticsSignHint" })

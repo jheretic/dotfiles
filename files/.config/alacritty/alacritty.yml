@@ -138,18 +138,18 @@ font:
     family: Fira Code iCursive S12
 
     # The `style` can be specified to pick a specific face.
-    style: Italix
+    style: Italic
 
   # Bold italic font face
-  #bold_italic:
+  bold_italic:
     # Font family
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    #family: monospace
+    family: Fira Code iCursive S12
 
     # The `style` can be specified to pick a specific face.
-    #style: Bold Italic
+    style: Italic
 
   # Point size
   #size: 11.0
@@ -195,8 +195,37 @@ draw_bold_text_with_bright_colors: true
     #dim_foreground: '#828482'
     #bright_foreground: '#eaeaea'
 
+# Colors (Sonokai Shusia)
+sonokai_shusia: &sonokai_shusia
+  # Default colors
+  primary:
+    background: '#1a181a'
+    foreground: '#e3e1e4'
+
+  # Normal colors
+  normal:
+    black:   '#2d2a2e'
+    red:     '#ff6188'
+    green:   '#a9dc76'
+    yellow:  '#e5c463'
+    blue:    '#78dce8'
+    magenta: '#ab9df2'
+    cyan:    '#78dce8'
+    white:   '#e3e1e4'
+
+  # Bright colors
+  bright:
+    black:   '#848089'
+    red:     '#f85e84'
+    green:   '#98e024'
+    yellow:  '#e5c463'
+    blue:    '#7accd7'
+    magenta: '#ab9df2'
+    cyan:    '#78dce8'
+    white:   '#e3e1e4'
+
 # Colors (Monokai Soda)
-colors:
+monokai_soda: &monokai_soda
   # Default colors
   primary:
     background: '#1a1a1a'
@@ -223,6 +252,34 @@ colors:
     magenta: '#f4005f'
     cyan:    '#58d1eb'
     white:   '#f6f6ef'
+
+# Colors (Edge Dark Neon)
+edge_dark_neon:  &edge_dark_neon
+  primary:
+    background: "0x2b2d3a"
+    foreground: "0xc5cdd9"
+
+  normal:
+    black: "0x363a4e"
+    red: "0xec7279"
+    green: "0xa0c980"
+    yellow: "0xdeb974"
+    blue: "0x6cb6eb"
+    magenta: "0xd38aea"
+    cyan: "0x5dbbc1"
+    white: "0xc5cdd9"
+
+  bright:
+    black: "0x363a4e"
+    red: "0xec7279"
+    green: "0xa0c980"
+    yellow: "0xdeb974"
+    blue: "0x6cb6eb"
+    magenta: "0xd38aea"
+    cyan: "0x5dbbc1"
+    white: "0xc5cdd9"
+
+colors: *sonokai_shusia
 
   # Cursor colors
   #

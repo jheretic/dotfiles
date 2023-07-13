@@ -308,3 +308,7 @@ hash "pyenv" 2>/dev/null && eval "$(pyenv init -)"
 if [[ -f ~/.bash_local ]]; then
   . ~/.bash_local
 fi
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/home/n0n/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

@@ -1,4 +1,29 @@
 local wezterm = require("wezterm")
+local xcursor_size = nil
+local xcursor_theme = nil
+local mono_font = nil
+local window_font = nil
+
+local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-theme"})
+if success then
+  xcursor_theme = stdout:gsub("'(.+)'\n", "%1")
+end
+
+local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-size"})
+if success then
+  xcursor_size = tonumber(stdout)
+end
+
+local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "monospace-font-name"})
+if success then
+  mono_font = stdout
+end
+
+local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.wm.preferences", "titlebar-font"})
+if success then
+  window_font = stdout
+end
+
 return {
 	adjust_window_size_when_changing_font_size = false,
   colors = {
@@ -164,6 +189,7 @@ return {
 	disable_default_key_bindings = true,
 	-- font = wezterm.font("Fira Code"),
 	-- font = wezterm.font("VictorMono Nerd Font", {weight = "DemiBold"}),
+	-- font = wezterm.font(mono_font),
   hide_tab_bar_if_only_one_tab = true,
   keys = {
     { key = "a", mods = "LEADER|CTRL",  action=wezterm.action{SendString="\x01"}},
@@ -217,13 +243,17 @@ return {
 	-- 	},
 	-- },
 	warn_about_missing_glyphs = false,
-	window_background_opacity = 0.85,
+	window_background_opacity = 1.00,
 	window_decorations = "RESIZE",
 	window_frame = {
-		font = wezterm.font { family = 'Noto Sans', weight = 'Bold' },
-		font_size = 11.0,
+		--font = wezterm.font { family = 'Noto Sans', weight = 'Bold' },
+		--font_size = 11.0,
+		--font = wezterm.font(window_font),
 		--active_titlebar_bg = '#962ac3',
 		active_titlebar_bg = '#16171d',
 		inactive_titlebar_bg = '#1e2128',
-	}
+	},
+  xcursor_theme = xcursor_theme,
+  xcursor_size = xcursor_size,
+
 }

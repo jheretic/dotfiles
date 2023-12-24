@@ -1,30 +1,58 @@
+[language-server.eslint]
+args = ["--stdio"]
+command = "vscode-eslint-language-server"
+config.hostInfo = "helix"
+config.validate = "on"
+config.experimental = { useFlatConfig = true}
+config.rulesCustomizations = []
+config.run = "onType"
+config.problems = { shortenToSingleLine = false }
+config.nodePath = ""
+
+[language-server.eslint.config.codeAction]
+disableRuleComment.enable = true
+disableRuleComment.location = "separateLine"
+showDocumentation.enable = true
+
+[language-server.eslint.config.codeActionOnSave]
+enable = true
+mode = "fixAll"
+
+[language-server.eslint.config.workingDirectory]
+mode = "location"
+
 [[language]]
-name = "javascript"
+name = "typescript"
+language-servers = [{except-features = ["format"], name = "typescript-language-server"}, "eslint"]
 formatter = { command = 'prettier', args = ["--parser", "typescript" ] }
 auto-format = true
 
 [[language]]
-name = "json"
-formatter = { command = 'prettier', args = ["--parser", "json" ] }
-
-[[language]]
-name = "markdown"
-formatter = { command = 'prettier', args = ["--parser", "markdown" ] }
-auto-format = true
-
-[[language]]
-name = "typescript"
+name = "javascript"
+language-servers = [{except-features = ["format"], name = "typescript-language-server"}, "eslint"]
 formatter = { command = 'prettier', args = ["--parser", "typescript" ] }
 auto-format = true
 
 [[language]]
 name = "jsx"
+language-servers = [{except-features = ["format"], name = "typescript-language-server"}, "eslint"]
 formatter = { command = 'prettier', args = ["--parser", "typescript" ] }
 auto-format = true
 
 [[language]]
 name = "tsx"
+language-servers = [{except-features = ["format"], name = "typescript-language-server"}, "eslint"]
 formatter = { command = 'prettier', args = ["--parser", "typescript" ] }
+auto-format = true
+
+[[language]]
+name = "json"
+auto-format = true
+formatter = { command = 'prettier', args = ["--parser", "json" ] }
+
+[[language]]
+name = "markdown"
+formatter = { command = 'prettier', args = ["--parser", "markdown" ] }
 auto-format = true
 
 [[language]]
@@ -39,8 +67,7 @@ auto-format = true
 
 [[language]]
 name = "bash"
-indent = { tab-width = 4, unit = "    " }
-formatter = { command = 'shfmt', args = ["-i", "4"] }
+formatter = { command = 'shfmt', args = ["-i", "2"] }
 auto-format = true
 
 [[language]]
@@ -51,4 +78,8 @@ auto-format = true
 [[language]]
 name = "python"
 formatter = { command = "black", args = ["--quiet", "-"] }
+auto-format = true
+
+[[language]]
+name = "rust"
 auto-format = true

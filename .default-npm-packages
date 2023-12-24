@@ -4,6 +4,7 @@ ts-node
 vscode-langservers-extracted
 prettier
 eslint_d
+@eslint/js
 eslint-config-prettier
 eslint-plugin-prettier
 npm-check-updates

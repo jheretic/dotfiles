@@ -1,5 +1,5 @@
-if type -q rtx
-    rtx activate fish | source
+if type -q mise
+    mise activate fish | source
 else
     if type -q pyenv
         pyenv init - | source
@@ -13,6 +13,8 @@ else
 end
 
 set -q KREW_ROOT; and set -gx PATH $PATH $KREW_ROOT/.krew/bin; or set -gx PATH $PATH $HOME/.krew/bin
+
+fish_add_path ~/.local/bin
 
 # Set tty for GPG programs like pinentry(s)
 set -x GPG_TTY (tty)

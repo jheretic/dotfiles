@@ -16,6 +16,8 @@ set -q KREW_ROOT; and set -gx PATH $PATH $KREW_ROOT/.krew/bin; or set -gx PATH $
 
 fish_add_path ~/.local/bin
 
+set fish_greeting
+
 # Set tty for GPG programs like pinentry(s)
 set -x GPG_TTY (tty)
 

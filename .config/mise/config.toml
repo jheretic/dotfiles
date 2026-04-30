@@ -1,0 +1,48 @@
+[tools]
+bun = "latest"
+node = "25"
+pi = "latest"
+
+[settings]
+experimental = true
+idiomatic_version_file_enable_tools = ["python"]
+
+[settings.npm]
+package_manager = "bun"
+
+[tasks."ai:agent"]
+description = "Run Pi agent in a sandbox"
+run = """
+run_command() {
+  local uid
+  local home
+  local pwd
+  uid="$1"
+  home="$2"
+  pwd="$3"
+
+  /usr/local/bin/msb run -u "${uid}:${uid}" -e HOME="$home" -v "${home}/.pi:${home}/.pi" -v "${home}/.local/share/mise:${home}/.local/share/mise" -v "${home}/.config/mise:${home}/.config/mise" -v "${pwd}:${pwd}" -w "$pwd" ghcr.io/throneless-tech/throneless-toolbox -- mise exec pi -- pi 
+}
+
+run_command "$(id -u)" "$HOME" "$(pwd)"
+"""
+
+[tasks."ai:workspace"]
+description = "Run AI development tasks in Wezterm panes"
+run = """
+run_command() {
+  local pane
+  local command
+  pane="$1"
+  command="$2"
+
+  echo "toolbox run --container dev ${command}" | wezterm cli send-text --no-paste --pane-id "$pane"
+}
+
+first_pane=$(wezterm cli spawn --cwd "$MISE_PROJECT_ROOT")
+run_command "$first_pane" "hx"
+second_pane=$(wezterm cli split-pane --right --pane-id "$first_pane")
+third_pane=$(wezterm cli split-pane --bottom --pane-id "$second_pane")
+run_command "$second_pane" "mise exec pi -- pi"
+run_command "$third_pane" "fish && reset"
+"""

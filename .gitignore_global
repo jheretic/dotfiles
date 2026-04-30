@@ -20,3 +20,10 @@ cscope.po.out
 # rtx local config files
 .rtx.local.toml
 .rtx.*.local.toml
+
+# mise local config files
+.mise.local.toml
+.mise.*.local.toml
+
+# local git worktrees
+.worktrees

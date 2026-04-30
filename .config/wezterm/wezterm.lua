@@ -238,17 +238,17 @@ return {
 		{ key = "r", mods = "CTRL|SHIFT", action = "ReloadConfiguration" },
 	},
 	leader = { key="a", mods="CTRL" },
-	-- unix_domains = {
-	-- 	{
-	-- 		name = 'unix',
-	-- 	},
-	-- },
+	unix_domains = {
+		{
+			name = 'unix',
+		},
+	},
 	tab_bar_at_bottom = true,
 	use_fancy_tab_bar = true,
 	warn_about_missing_glyphs = false,
 	window_background_opacity = 1.00,
 	window_close_confirmation = "NeverPrompt",
-	window_decorations = "RESIZE",
+	window_decorations = "NONE",
 	window_frame = {
 		--font = wezterm.font { family = 'Noto Sans', weight = 'Bold' },
 		--font_size = 11.0,

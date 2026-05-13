@@ -1,0 +1,22 @@
+{
+  "tools": {
+    "search": "custom",
+    "answer": "custom",
+    "research": "custom"
+  },
+  "providers": {
+    "custom": {
+      "options": {
+        "search": {
+          "argv": ["bash", "/home/n0n/.pi/agent/wrappers/openrouter-search.sh"]
+        },
+        "answer": {
+          "argv": ["bash", "/home/n0n/.pi/agent/wrappers/openrouter-answer.sh"]
+        },
+        "research": {
+          "argv": ["bash", "/home/n0n/.pi/agent/wrappers/openrouter-research.sh"]
+        }
+      }
+    }
+  }
+}

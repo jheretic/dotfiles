@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.71.1",
+  "lastChangelogVersion": "0.74.0",
   "defaultProvider": "openrouter",
   "defaultModel": "anthropic/claude-opus-4.7",
   "defaultThinkingLevel": "medium",
@@ -9,41 +9,17 @@
   ],
   "packages": [
     "npm:pi-powerline-footer",
-    "npm:pi-subagents",
     "npm:pi-schedule-prompt",
-    "npm:@aliou/pi-processes"
+    "npm:@aliou/pi-processes",
+    "npm:context-mode",
+    "npm:pi-mcp-adapter",
+    "git:github.com/jo-inc/pi-mem",
+    "git:github.com/jo-inc/pi-reflect",
+    "npm:@tintinweb/pi-subagents",
+    "npm:@tintinweb/pi-tasks",
+    "npm:pi-web-providers"
   ],
   "powerline": {
     "preset": "nerd"
-  },
-  "subagents": {
-    "agentOverrides": {
-      "scout": {
-        "model": "~anthropic/claude-sonnet-latest"
-      },
-      "context-builder": {
-        "model": "~anthropic/claude-opus-latest"
-      },
-      "planner": {
-        "model": "~anthropic/claude-opus-latest",
-        "thinking": "high"
-      },
-      "researcher": {
-        "model": "~openai/gpt-latest"
-      },
-      "reviewer": {
-        "model": "~anthropic/claude-opus-latest"
-      },
-      "oracle": {
-        "model": "~anthropic/claude-opus-latest",
-        "thinking": "high",
-        "fallbackModels": [
-          "~openai/gpt-latest"
-        ]
-      },
-      "worker": {
-        "model": "~anthropic/claude-sonnet-latest"
-      }
-    }
   }
 }

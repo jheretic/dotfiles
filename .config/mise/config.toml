@@ -43,10 +43,28 @@ run_workspace() {
   echo "toolbox run --container dev ${command}" | wezterm cli send-text --no-paste --pane-id "$pane"
 }
 
-first_pane=$(wezterm cli spawn --cwd "$MISE_PROJECT_ROOT")
-run_workspace "$first_pane" "hx"
-second_pane=$(wezterm cli split-pane --right --pane-id "$first_pane")
+second_pane=$(wezterm cli split-pane --right)
 third_pane=$(wezterm cli split-pane --bottom --pane-id "$second_pane")
 run_workspace "$second_pane" "mise exec pi -- pi"
-run_workspace "$third_pane" "fish && reset"
+run_workspace "$third_pane" "fish"
+hx
+"""
+
+[tasks."ai:workspace-wide"]
+description = "Run AI development tasks in Wezterm panes (Widescreen version)"
+run = """
+run_workspace() {
+  local pane
+  local command
+  pane="$1"
+  command="$2"
+
+  echo "toolbox run --container dev ${command}" | wezterm cli send-text --no-paste --pane-id "$pane"
+}
+
+second_pane=$(wezterm cli split-pane --right --percent 67)
+third_pane=$(wezterm cli split-pane --right --pane-id "$second_pane" --percent 50)
+run_workspace "$second_pane" "hx"
+run_workspace "$third_pane" "fish"
+mise exec pi -- pi
 """

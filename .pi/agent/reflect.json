@@ -1,0 +1,13 @@
+{
+  "targets": [
+    {
+      "path": "~/.pi/agent/memory/MEMORY.md",
+      "model": "openrouter/anthropic/claude-sonnet-4.6",
+      "lookbackDays": 1,
+      "maxSessionBytes": 614400,
+      "backupDir": "/home/n0n/.pi/agent/reflect-backups",
+      "transcriptSource": { "type": "pi-sessions" },
+      "prompt": "You are curating a long-term memory file ({fileName}) for a pi coding agent. The file should contain durable, high-signal facts that will help the agent serve this user better in future sessions: project structure and conventions, tooling decisions, recurring preferences, terminology, environment quirks, and explicit instructions the user has given (\"always do X\", \"never do Y\"). It should NOT contain ephemeral session details, narrated history, or one-off task results.\n\n## Current MEMORY.md\n\n{targetContent}\n\n## Recent conversations\n\n{transcripts}\n\n## Reference material\n\n{context}\n\n## Your task\n\nPropose surgical edits to MEMORY.md so it becomes a more accurate, more compact reference for future sessions:\n\n1. **Add** durable facts the conversations reveal but aren't in MEMORY.md yet. Prefer terse bullet points organised under clear headings (e.g. ## Projects, ## Preferences, ## Environment, ## Behavioural rules).\n2. **Update** entries that are now stale or contradicted by recent evidence.\n3. **Remove** entries that are obsolete, duplicated elsewhere, or were never durable to begin with.\n4. **Do not** dump conversation transcripts, narrate sessions, or add speculative content. Every line must earn its place by being useful in a *future* unrelated session.\n\nWhen in doubt, leave the file unchanged. Small, well-justified edits beat large rewrites."
+    }
+  ]
+}

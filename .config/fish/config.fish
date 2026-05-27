@@ -32,7 +32,5 @@ if type -q starship
     starship init fish | source
 end
 
-# Added by LM Studio CLI (lms)
-set -gx PATH $PATH /home/n0n/.lmstudio/bin
-# End of LM Studio CLI section
-
+# Needed by pi
+fish_add_path ~/.bun/bin

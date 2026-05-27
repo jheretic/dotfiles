@@ -12,6 +12,9 @@ package_manager = "bun"
 
 [tasks."ai:agent"]
 description = "Run Pi agent in a sandbox"
+usage = '''
+arg "<dir>" help="Session working directory" default=""
+'''
 run = """
 run_agent() {
   local uid
@@ -19,16 +22,15 @@ run_agent() {
   local pwd
   uid="$1"
   home="$2"
-  pwd="$3"
+  pwd="${3:-$MISE_ORIGINAL_CWD}"
 
   # Workaround for an issue with installing via mise
   mkdir -p "${home}/.bun/install/global"
   touch "${home}/.bun/install/global/package.json"
 
-  /usr/local/bin/msb run -u "${uid}:${uid}" -e HOME="$home" -v "${home}/.pi:${home}/.pi" -v "${home}/.local/share/mise:${home}/.local/share/mise" -v "${home}/.config/mise:${home}/.config/mise" -v "${pwd}:${pwd}" -w "$pwd" ghcr.io/throneless-tech/throneless-toolbox -- mise exec pi -- pi 
+  /usr/local/bin/msb run -c4 -m16G -u "${uid}:${uid}" -e HOME="$home" -v "${home}/.pi:${home}/.pi" -v "${home}/.gitignore_global:${home}/.gitignore_global" -v "${home}/.local/share/mise:${home}/.local/share/mise" -v "${home}/.local/state/mise:${home}/.local/state/mise" -v "${home}/.config/mise:${home}/.config/mise" -v "${home}/.cache/mise:${home}/.cache/mise" -v "${home}/.bun:${home}/.bun" -v "${pwd}:${pwd}" -w "$pwd" ghcr.io/throneless-tech/throneless-toolbox -- mise exec pi -- pi -c
 }
-
-run_agent "$(id -u)" "$HOME" "$(pwd)"
+run_agent "$(id -u)" "$HOME" "${usage_dir?}"
 """
 
 [tasks."ai:workspace"]
@@ -45,7 +47,7 @@ run_workspace() {
 
 second_pane=$(wezterm cli split-pane --right)
 third_pane=$(wezterm cli split-pane --bottom --pane-id "$second_pane")
-run_workspace "$second_pane" "mise exec pi -- pi"
+run_workspace "$second_pane" "mise ai:agent $MISE_ORIGINAL_CWD"
 run_workspace "$third_pane" "fish"
 hx
 """
@@ -66,5 +68,5 @@ second_pane=$(wezterm cli split-pane --right --percent 67)
 third_pane=$(wezterm cli split-pane --right --pane-id "$second_pane" --percent 50)
 run_workspace "$second_pane" "hx"
 run_workspace "$third_pane" "fish"
-mise exec pi -- pi
+mise ai:agent $MISE_ORIGINAL_CWD
 """

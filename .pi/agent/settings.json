@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.74.0",
+  "lastChangelogVersion": "0.75.5",
   "defaultProvider": "openrouter",
-  "defaultModel": "anthropic/claude-opus-4.7",
+  "defaultModel": "~anthropic/claude-opus-latest",
   "defaultThinkingLevel": "medium",
   "enableInstallTelemetry": false,
   "npmCommand": [
@@ -17,7 +17,7 @@
     "git:github.com/jo-inc/pi-reflect",
     "npm:@tintinweb/pi-subagents",
     "npm:@tintinweb/pi-tasks",
-    "npm:pi-web-providers"
+    "npm:pi-smart-fetch"
   ],
   "powerline": {
     "preset": "nerd"

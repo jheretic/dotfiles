@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.75.5",
+  "lastChangelogVersion": "0.79.1",
   "defaultProvider": "openrouter",
   "defaultModel": "~anthropic/claude-opus-latest",
   "defaultThinkingLevel": "medium",
@@ -17,7 +17,8 @@
     "git:github.com/jo-inc/pi-reflect",
     "npm:@tintinweb/pi-subagents",
     "npm:@tintinweb/pi-tasks",
-    "npm:pi-smart-fetch"
+    "npm:pi-smart-fetch",
+    "npm:pi-notify"
   ],
   "powerline": {
     "preset": "nerd"

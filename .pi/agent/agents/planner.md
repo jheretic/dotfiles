@@ -4,7 +4,7 @@ display_name: Planner
 tools: read, bash, grep, find, ls, TaskCreate, TaskList, TaskGet, TaskUpdate, TaskOutput
 extensions: true
 disallowed_tools: write, edit, memory_write, TaskExecute, TaskStop
-model: ~anthropic/claude-opus-latest
+model: ~anthropic/claude-fable-latest
 thinking: high
 max_turns: 30
 prompt_mode: append

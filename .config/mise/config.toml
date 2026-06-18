@@ -28,7 +28,7 @@ run_agent() {
   mkdir -p "${home}/.bun/install/global"
   touch "${home}/.bun/install/global/package.json"
 
-  /usr/local/bin/msb run -c4 -m16G -u "${uid}:${uid}" -e HOME="$home" -v "${home}/.pi:${home}/.pi" -v "${home}/.gitignore_global:${home}/.gitignore_global" -v "${home}/.local/share/mise:${home}/.local/share/mise" -v "${home}/.local/state/mise:${home}/.local/state/mise" -v "${home}/.config/mise:${home}/.config/mise" -v "${home}/.cache/mise:${home}/.cache/mise" -v "${home}/.bun:${home}/.bun" -v "${pwd}:${pwd}" -w "$pwd" ghcr.io/throneless-tech/throneless-toolbox -- mise exec pi -- pi -c
+  /usr/local/bin/msb run --label toolbox -c4 -m16G -e HOME="$home" -v "${home}/.pi:${home}/.pi" -v "${home}/.gitignore_global:${home}/.gitignore_global" -v "${home}/.local/share/mise:${home}/.local/share/mise" -v "${home}/.local/state/mise:${home}/.local/state/mise" -v "${home}/.config/mise:${home}/.config/mise" -v "${home}/.cache/mise:${home}/.cache/mise" -v "${home}/.bun:${home}/.bun" -v "${pwd}:${pwd}" -w "$pwd" ghcr.io/throneless-tech/throneless-toolbox -- mise exec pi -- pi -c
 }
 run_agent "$(id -u)" "$HOME" "${usage_dir?}"
 """

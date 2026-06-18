@@ -12,6 +12,8 @@ else
     end
 end
 
+set -gx EDITOR hx
+
 set -q KREW_ROOT; and set -gx PATH $PATH $KREW_ROOT/.krew/bin; or set -gx PATH $PATH $HOME/.krew/bin
 
 fish_add_path ~/.local/bin
